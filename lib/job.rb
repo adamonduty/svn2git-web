@@ -1,5 +1,6 @@
 require 'securerandom'
 require 'redis-objects'
+require_relative 'job_worker'
 
 class Job
   include Redis::Objects
@@ -22,10 +23,11 @@ class Job
   attr_reader :id
   hash_key :attributes
   value :log
-  attr_writer :svn_url, :git_url
+  attr_writer :options
 
   def initialize(id = SecureRandom.uuid)
     @id = id
+    @options = {}
   end
 
   def svn_url
@@ -45,9 +47,22 @@ class Job
   end
 
   def save!
-    attributes['svn_url'] = @svn_url
-    attributes['git_url'] = @git_url
-    attributes['status'] = 'new'
+    @options.delete_if {|key, value| value.nil? || value.strip == '' }
+
+    # required
+    attributes['svn_url'] = @options['svn_url']
+    attributes['git_url'] = @options['git_url']
+    attributes['status']  = 'new'
+
+    # optional
+    %w(rootistrunk notrunk nobranches notags nominimizeurl metadata verbose username trunk branches tags revision_start revision_end).each do |attr|
+      attributes[attr] = @options[attr] if @options[attr]
+    end
+
+    # prepend to jobs list
     self.class.jobs.unshift id
+
+    # start job
+    JobWorker.perform_async id
   end
 end

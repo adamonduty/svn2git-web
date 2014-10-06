@@ -1,12 +1,38 @@
 <h1>svn2git-web</h1>
 <p>Move your svn project to git with a few clicks.</p>
+<p><a href="/jobs">View All Jobs</a></p>
 
 <form action=/jobs method=post>
-<p>svn url:</p>
+<b>Required Settings</b>
+<p><b>svn url:</b></p>
 <p><input type=text name="job[svn_url]" /></p>
 
-<p>git url:</p>
+<p><b>git url:</b></p>
 <p><input type=text name="job[git_url]" /></p>
+
+<b>Optional Settings</b>
+<p><input type=checkbox name=job[rootistrunk] value=true /> <b>rootistrunk</b> : Use this if the root level of the repo is equivalent to the trunk and there are no tags or branches</p>
+<p><input type=checkbox name=job[notrunk] value=true /> <b>notrunk</b> : Do not import anything from trunk</p>
+<p><input type=checkbox name=job[nobranches] value=true /> <b>nobranches</b> : Do not try to import any branches</p>
+<p><input type=checkbox name=job[notags] value=true /> <b>notags</b> : Do not try to import any tags</p>
+<p><input type=checkbox name=job[no-minimize-url] value=true /> <b>no minimize url</b> : Accept URLs as-is without attempting to connect to a higher level directory</p>
+<p><input type=checkbox name=job[metadata] value=true /> <b>metadata</b> : Include metadata in git logs (git-svn-id)</p>
+<p><input type=checkbox name=job[verbose] value=true /> <b>verbose</b> : Be verbose in logging -- useful for debugging issues</p>
+
+<p><b>username</b>: Username for transports that need it (http(s), svn)</p>
+<p><input type=text name="job[username]" /></p>
+
+<p><b>trunk</b>: Subpath to trunk from repository URL</p>
+<p><input type=text name="job[trunk]" placeholder="trunk" /></p>
+
+<p><b>branches</b>: Subpath to branches from repository URL</p>
+<p><input type=text name="job[branches]" placeholder="branches" /></p>
+
+<p><b>tags</b>: Subpath to tags from repository URL</p>
+<p><input type=text name="job[tags]" placeholder="tags" /></p>
+
+<p><b>revision</b>: Start importing from SVN revision START_REV; optionally end at END_REV</p>
+<p><input type=text name="job[revision_start]" placeholder="start" /> : <input type=text name="job[revision_end]" placeholder="end" /></p>
 
 <p><input type=submit name=submit /></p>
 </form>

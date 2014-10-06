@@ -7,8 +7,7 @@ end
 
 post '/jobs' do
   @job = Job.new
-  @job.svn_url = params['job']['svn_url']
-  @job.git_url = params['job']['git_url']
+  @job.options = params['job']
   @job.save!
   redirect "/jobs/#{@job.id}"
 end
