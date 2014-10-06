@@ -1,0 +1,6 @@
+<h1>svn2git-web</h1>
+
+<h2>Jobs</h2>
+<% @jobs.each do |job| %>
+  <p><%= job.status %>: <a href="/jobs/<%= job.id %>"><%= job.id %></a></p>
+<% end %>

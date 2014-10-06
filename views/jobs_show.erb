@@ -1,0 +1,12 @@
+<h1>Job <%= @job.id %></h1>
+
+<p>From: <%= @job.svn_url %></p>
+
+<p>To: <%= @job.git_url %></p>
+
+<p>Status: <%= @job.status %></p>
+
+<p>Log:</p>
+<pre>
+<%= @job.log.value %>
+</pre>
