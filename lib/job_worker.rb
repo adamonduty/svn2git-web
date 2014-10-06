@@ -8,7 +8,7 @@ class JobWorker
   sidekiq_options retry: false
 
   # Signal that command execution failed
-  class CommandFailed < StandardError; end
+  class CommandError < StandardError; end
 
   def perform(job_id)
     @job = Job.find job_id
